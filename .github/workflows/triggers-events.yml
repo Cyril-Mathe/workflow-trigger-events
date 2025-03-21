@@ -9,7 +9,7 @@ env:
 jobs:
   issues_opened:
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'issues.opened'}}
+    if: ${{ github.event_name == 'issues' && github.event.action == 'opened' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -17,7 +17,7 @@ jobs:
         run: echo "$ISSUE"
   merge_pr:
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'pull_request.merged'}}
+    if: ${{ github.event_name == 'pull_request' && github.event.action == 'merged' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -25,7 +25,7 @@ jobs:
         run: echo "$MERGE_PR"
   next_w:
     runs-on: ubuntu-latest
-    if: ${{ github.event.merge_pr.conclusion == 'success'}}
+    if: ${{ github.event_name == 'pull_request' && github.event.action == 'merged' && github.event.conclusion == 'success' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
