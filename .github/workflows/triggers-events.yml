@@ -1,5 +1,8 @@
 name: TriggersEvents
-on: [issues, pull_request, workflow_call]
+on:
+  issues:
+  pull_request:
+  workflow_call:
 
 env:
   ISSUE: Issue opened
