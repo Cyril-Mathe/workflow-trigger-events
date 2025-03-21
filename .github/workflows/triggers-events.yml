@@ -1,0 +1,33 @@
+name: TriggersEvents
+on: [issues, pull_request, workflow_call]
+
+env:
+  ISSUE: Issue opened
+  MERGE_PR: Pull request merged
+  NEXT: Next workflow worked
+
+jobs:
+  issues_opened:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'issues.opened'}}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Issue
+        run: echo "$ISSUE"
+  merge_pr:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'pull_request.merged'}}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Merge PR
+        run: echo "$MERGE_PR"
+  next_w:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.merge_pr.conclusion == 'success'}}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Next workflow
+        run: echo "$NEXT"
